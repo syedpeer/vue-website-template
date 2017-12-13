@@ -3,12 +3,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 {{/if_eq}}
 import Vue from 'vue'
-import App from './App'
 {{#router}}
 import router from './router'
+import plugin from 'vue-website-plugins/vue'
 {{/router}}
 
 Vue.config.productionTip = false
+Vue.use(plugin, {router})
+
 
 /* eslint-disable no-new */
 new Vue({
@@ -20,7 +22,6 @@ new Vue({
   render: h => h(App)
   {{/if_eq}}
   {{#if_eq build "standalone"}}
-  template: '<App/>',
-  components: { App }
+  template: '<router-view id="app"/>',
   {{/if_eq}}
 })
