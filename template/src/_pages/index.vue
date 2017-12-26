@@ -1,14 +1,6 @@
 <template>
   <main-layout>
-    <div class="my-content">
-      my content
-    </div>
+    my content
+    <a href="/contact" @click.prevent="$router.push('/contact')">nous contacter</a>
   </main-layout>
 </template>
- 
-<style>
-  .my-content {
-    padding: 20px;
-  }
-</style> 
- 

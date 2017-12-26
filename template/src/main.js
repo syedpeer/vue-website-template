@@ -11,7 +11,6 @@ import plugin from 'vue-website-plugins/vue'
 Vue.config.productionTip = false
 Vue.use(plugin, {router})
 
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
