@@ -12,7 +12,7 @@ npm i -g vue-website-cli
     <pre><code>
 vue-website generate my-website
     </code></pre>
-    <p>A npm run dev will live reload your site, a npm run build will generate your static pages, embedding wuejs anyway for reactivity and user interaction.</p>
+    <p>A <code>npm run dev</code> will live reload your site, a <code>npm run build</code> will generate your static pages, embedding VueJS anyway for reactivity and user interaction.</p>
     <a href="/contact" @click.prevent="$router.push('/contact')">Contact us</a>
   </main-layout>
 </template>
