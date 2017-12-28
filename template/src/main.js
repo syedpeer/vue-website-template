@@ -21,6 +21,6 @@ new Vue({
   render: h => h(App)
   {{/if_eq}}
   {{#if_eq build "standalone"}}
-  template: '<router-view id="app"/>',
+  template: '<router-view id="app"/>'
   {{/if_eq}}
 })
