@@ -1,21 +1,35 @@
-const path = require('path');
-const fs = require('fs');
+const path = require('path')
+const fs = require('fs')
+
 const {
   sortDependencies,
   installDependencies,
   runLintFix,
-  printMessage
+  printMessage,
 } = require('./utils')
+const pkg = require('./package.json')
+
+const templateVersion = pkg.version
+
+const { addTestAnswers } = require('./scenarios')
 
 module.exports = {
+  metalsmith: {
+    // When running tests for the template, this adds answers for the selected scenario
+    before: addTestAnswers
+  },
   helpers: {
-    if_or: function (v1, v2, options) {
+    if_or(v1, v2, options) {
+
       if (v1 || v2) {
-        return options.fn(this);
+        return options.fn(this)
       }
 
-      return options.inverse(this);
-    }
+      return options.inverse(this)
+    },
+    template_version() {
+      return templateVersion
+    },
   },
   filters: {
     '.eslintrc.js': 'lint',
@@ -29,7 +43,7 @@ module.exports = {
     'test/unit/specs/index.js': "unit && runner === 'karma'",
     'test/unit/setup.js': "unit && runner === 'jest'",
     'test/e2e/**/*': 'e2e',
-    'src/router/**/*': 'router'
+    'src/router/**/*': 'router',
   },
   "metalsmith": {
     before: function (metalsmith, opts, helpers) {
@@ -59,18 +73,20 @@ module.exports = {
     sortDependencies(data, green)
 
     const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
-    
+
     if (data.autoInstall) {
       installDependencies(cwd, data.autoInstall, green)
-      .then(() => {
-        return runLintFix(cwd, data, green)
-      })
-      .then(() => {
-        printMessage(data, green)
-      })
+        .then(() => {
+          return runLintFix(cwd, data, green)
+        })
+        .then(() => {
+          printMessage(data, green)
+        })
+        .catch(e => {
+          console.log(chalk.red('Error:'), e)
+        })
     } else {
       printMessage(data, chalk)
     }
-    
-  }
-};
+  },
+}
